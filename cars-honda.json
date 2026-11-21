@@ -1,0 +1,33 @@
+[
+  [
+    "Honda Amaze",
+    7.2,
+    "Sedan",
+    [
+      "Petrol"
+    ],
+    1,
+    5,
+    "19 km/l",
+    [
+      "ADAS",
+      "Touchscreen"
+    ]
+  ],
+  [
+    "Honda City",
+    11.9,
+    "Sedan",
+    [
+      "Petrol",
+      "Hybrid"
+    ],
+    1,
+    5,
+    "18 km/l",
+    [
+      "Sunroof",
+      "ADAS"
+    ]
+  ]
+]

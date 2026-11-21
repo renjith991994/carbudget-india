@@ -1,0 +1,114 @@
+[
+  [
+    "Tata Tiago",
+    5,
+    "Hatchback",
+    [
+      "Petrol",
+      "CNG"
+    ],
+    1,
+    5,
+    "20 km/l",
+    [
+      "Touchscreen",
+      "Rear camera"
+    ]
+  ],
+  [
+    "Tata Punch",
+    5.6,
+    "SUV",
+    [
+      "Petrol",
+      "CNG"
+    ],
+    1,
+    5,
+    "20 km/l",
+    [
+      "Sunroof",
+      "Touchscreen"
+    ]
+  ],
+  [
+    "Tata Nexon",
+    7.3,
+    "SUV",
+    [
+      "Petrol",
+      "Diesel",
+      "CNG"
+    ],
+    1,
+    5,
+    "17 km/l",
+    [
+      "Sunroof",
+      "360° camera",
+      "Ventilated seats"
+    ]
+  ],
+  [
+    "Tata Tiago EV",
+    7.9,
+    "Hatchback",
+    [
+      "Electric"
+    ],
+    1,
+    5,
+    "315 km range",
+    [
+      "Touchscreen",
+      "Rear camera"
+    ]
+  ],
+  [
+    "Tata Punch EV",
+    9.9,
+    "SUV",
+    [
+      "Electric"
+    ],
+    1,
+    5,
+    "365 km range",
+    [
+      "Sunroof",
+      "360° camera"
+    ]
+  ],
+  [
+    "Tata Nexon EV",
+    12.5,
+    "SUV",
+    [
+      "Electric"
+    ],
+    1,
+    5,
+    "400 km range",
+    [
+      "Sunroof",
+      "360° camera",
+      "Ventilated seats"
+    ]
+  ],
+  [
+    "Tata Harrier",
+    14,
+    "SUV",
+    [
+      "Diesel"
+    ],
+    1,
+    5,
+    "16 km/l",
+    [
+      "Sunroof",
+      "ADAS",
+      "360° camera"
+    ]
+  ]
+]

@@ -1,0 +1,66 @@
+[
+  [
+    "Hyundai Grand i10 Nios",
+    5.9,
+    "Hatchback",
+    [
+      "Petrol",
+      "CNG"
+    ],
+    1,
+    5,
+    "20 km/l",
+    [
+      "Touchscreen",
+      "Rear camera"
+    ]
+  ],
+  [
+    "Hyundai i20",
+    7,
+    "Hatchback",
+    [
+      "Petrol"
+    ],
+    1,
+    5,
+    "20 km/l",
+    [
+      "Sunroof",
+      "Wireless charging"
+    ]
+  ],
+  [
+    "Hyundai Venue",
+    7.3,
+    "SUV",
+    [
+      "Petrol",
+      "Diesel"
+    ],
+    1,
+    5,
+    "18 km/l",
+    [
+      "Sunroof",
+      "ADAS"
+    ]
+  ],
+  [
+    "Hyundai Creta",
+    11,
+    "SUV",
+    [
+      "Petrol",
+      "Diesel"
+    ],
+    1,
+    5,
+    "17 km/l",
+    [
+      "Sunroof",
+      "ADAS",
+      "Ventilated seats"
+    ]
+  ]
+]
