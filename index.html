@@ -122,33 +122,8 @@ dialog h2{margin:0;font:400 34px/1.05 var(--serif)}dialog h3{margin:22px 0 10px;
 <dialog id="dlg" aria-label="Car details"></dialog>
 <script>
 // name, ex-showroom ₹ lakh (indicative), body, fuels, automatic available, seats, mileage/range, features
-const CARS=[
-['Maruti Alto K10',3.7,'Hatchback',['Petrol','CNG'],1,5,'24 km/l',['Touchscreen']],
-['Tata Tiago',5.0,'Hatchback',['Petrol','CNG'],1,5,'20 km/l',['Touchscreen','Rear camera']],
-['Tata Punch',5.6,'SUV',['Petrol','CNG'],1,5,'20 km/l',['Sunroof','Touchscreen']],
-['Hyundai Grand i10 Nios',5.9,'Hatchback',['Petrol','CNG'],1,5,'20 km/l',['Touchscreen','Rear camera']],
-['Maruti Dzire',6.3,'Sedan',['Petrol','CNG'],1,5,'25 km/l',['Sunroof','Rear camera']],
-['Maruti Swift',6.5,'Hatchback',['Petrol','CNG'],1,5,'25 km/l',['Touchscreen','Rear camera']],
-['Maruti Baleno',6.6,'Hatchback',['Petrol','CNG'],1,5,'22 km/l',['360° camera','Touchscreen']],
-['Hyundai i20',7.0,'Hatchback',['Petrol'],1,5,'20 km/l',['Sunroof','Wireless charging']],
-['Honda Amaze',7.2,'Sedan',['Petrol'],1,5,'19 km/l',['ADAS','Touchscreen']],
-['Tata Nexon',7.3,'SUV',['Petrol','Diesel','CNG'],1,5,'17 km/l',['Sunroof','360° camera','Ventilated seats']],
-['Hyundai Venue',7.3,'SUV',['Petrol','Diesel'],1,5,'18 km/l',['Sunroof','ADAS']],
-['Kia Sonet',7.3,'SUV',['Petrol','Diesel'],1,5,'18 km/l',['Sunroof','ADAS','Ventilated seats']],
-['Mahindra XUV 3XO',7.5,'SUV',['Petrol','Diesel'],1,5,'18 km/l',['Sunroof','ADAS']],
-['Tata Tiago EV',7.9,'Hatchback',['Electric'],1,5,'315 km range',['Touchscreen','Rear camera']],
-['Maruti Brezza',8.3,'SUV',['Petrol','CNG'],1,5,'20 km/l',['Sunroof','360° camera']],
-['Maruti Ertiga',9.0,'MPV',['Petrol','CNG'],1,7,'20 km/l',['Touchscreen','Rear camera']],
-['Tata Punch EV',9.9,'SUV',['Electric'],1,5,'365 km range',['Sunroof','360° camera']],
-['Maruti Grand Vitara',10.8,'SUV',['Petrol','CNG','Hybrid'],1,5,'21 km/l',['Sunroof','360° camera']],
-['Hyundai Creta',11.0,'SUV',['Petrol','Diesel'],1,5,'17 km/l',['Sunroof','ADAS','Ventilated seats']],
-['Honda City',11.9,'Sedan',['Petrol','Hybrid'],1,5,'18 km/l',['Sunroof','ADAS']],
-['Tata Nexon EV',12.5,'SUV',['Electric'],1,5,'400 km range',['Sunroof','360° camera','Ventilated seats']],
-['Mahindra Scorpio-N',13.5,'SUV',['Petrol','Diesel'],1,7,'15 km/l',['Sunroof','4x4 option']],
-['Tata Harrier',14.0,'SUV',['Diesel'],1,5,'16 km/l',['Sunroof','ADAS','360° camera']],
-['Mahindra XUV700',14.0,'SUV',['Petrol','Diesel'],1,7,'15 km/l',['Sunroof','ADAS','360° camera']],
-['Toyota Innova Hycross',19.5,'MPV',['Hybrid'],1,7,'21 km/l',['Sunroof','ADAS','Ventilated seats']]
-];
+const CARS=[];
+let carsReady=false;
 const BODIES=['Hatchback','Sedan','SUV','MPV'],FUELS=['Petrol','Diesel','CNG','Electric','Hybrid'],FEATS=['Sunroof','ADAS','360° camera','Ventilated seats'];
 const ONROAD=1.12;
 const S={budget:10,onroad:false,body:new Set(),fuel:new Set(),feat:new Set(),auto:false,seven:false,sort:'hi'};
@@ -211,6 +186,7 @@ function render(){
   $('rng').style.setProperty('--p',((b-3)/22*100)+'%');
   $('hint').textContent=S.onroad?`Showing cars up to ${fmt(lim)} ex-showroom`:'Ex-showroom price, before registration and insurance';
   document.querySelectorAll('#quick button').forEach(x=>x.setAttribute('aria-pressed',+x.dataset.v===b));
+  if(!carsReady)return;
   const pool=CARS.filter(matches);
   const fit=pool.filter(c=>c[1]<=lim),near=pool.filter(c=>c[1]>lim&&c[1]<=lim*1.1);
   fit.sort(S.sort==='hi'?(a,z)=>z[1]-a[1]:(a,z)=>a[1]-z[1]);near.sort((a,z)=>a[1]-z[1]);
@@ -219,7 +195,36 @@ function render(){
   const clr=$('clr');if(clr)clr.onclick=()=>{S.body.clear();S.fuel.clear();S.feat.clear();S.auto=S.seven=false;document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));render()};
   $('near').innerHTML=near.map(c=>card(c,lim,1)).join('');$('nearWrap').hidden=!near.length;
 }
+async function loadCars(){
+  carsReady=false;CARS.length=0;
+  $('count').textContent='Loading cars…';
+  $('list').innerHTML='';$('list').setAttribute('aria-busy','true');
+  $('nearWrap').hidden=true;
+  try{
+    const read=async file=>{
+      const response=await fetch(file);
+      if(!response.ok)throw new Error(`Could not load ${file}`);
+      const data=await response.json();
+      if(!Array.isArray(data))throw new Error(`Expected an array in ${file}`);
+      return data;
+    };
+    const files=await read('brands.json');
+    const cars=(await Promise.all(files.map(read))).flat();
+    // Restore the original price order; manifest order preserves equal-price ties.
+    cars.sort((a,b)=>a[1]-b[1]);
+    CARS.push(...cars);carsReady=true;
+    render();
+  }catch{
+    carsReady=false;CARS.length=0;
+    $('count').textContent='Cars could not be loaded';
+    $('list').innerHTML='<li class="empty"><b>Unable to load cars</b>Check your connection and try again.<br><button type="button" id="retry">Try again</button></li>';
+    $('retry').onclick=loadCars;
+  }finally{
+    $('list').removeAttribute('aria-busy');
+  }
+}
 render();
+loadCars();
 </script>
 </body>
 </html>

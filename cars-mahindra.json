@@ -1,0 +1,51 @@
+[
+  [
+    "Mahindra XUV 3XO",
+    7.5,
+    "SUV",
+    [
+      "Petrol",
+      "Diesel"
+    ],
+    1,
+    5,
+    "18 km/l",
+    [
+      "Sunroof",
+      "ADAS"
+    ]
+  ],
+  [
+    "Mahindra Scorpio-N",
+    13.5,
+    "SUV",
+    [
+      "Petrol",
+      "Diesel"
+    ],
+    1,
+    7,
+    "15 km/l",
+    [
+      "Sunroof",
+      "4x4 option"
+    ]
+  ],
+  [
+    "Mahindra XUV700",
+    14,
+    "SUV",
+    [
+      "Petrol",
+      "Diesel"
+    ],
+    1,
+    7,
+    "15 km/l",
+    [
+      "Sunroof",
+      "ADAS",
+      "360° camera"
+    ]
+  ]
+]

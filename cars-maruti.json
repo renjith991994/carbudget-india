@@ -1,0 +1,114 @@
+[
+  [
+    "Maruti Alto K10",
+    3.7,
+    "Hatchback",
+    [
+      "Petrol",
+      "CNG"
+    ],
+    1,
+    5,
+    "24 km/l",
+    [
+      "Touchscreen"
+    ]
+  ],
+  [
+    "Maruti Dzire",
+    6.3,
+    "Sedan",
+    [
+      "Petrol",
+      "CNG"
+    ],
+    1,
+    5,
+    "25 km/l",
+    [
+      "Sunroof",
+      "Rear camera"
+    ]
+  ],
+  [
+    "Maruti Swift",
+    6.5,
+    "Hatchback",
+    [
+      "Petrol",
+      "CNG"
+    ],
+    1,
+    5,
+    "25 km/l",
+    [
+      "Touchscreen",
+      "Rear camera"
+    ]
+  ],
+  [
+    "Maruti Baleno",
+    6.6,
+    "Hatchback",
+    [
+      "Petrol",
+      "CNG"
+    ],
+    1,
+    5,
+    "22 km/l",
+    [
+      "360° camera",
+      "Touchscreen"
+    ]
+  ],
+  [
+    "Maruti Brezza",
+    8.3,
+    "SUV",
+    [
+      "Petrol",
+      "CNG"
+    ],
+    1,
+    5,
+    "20 km/l",
+    [
+      "Sunroof",
+      "360° camera"
+    ]
+  ],
+  [
+    "Maruti Ertiga",
+    9,
+    "MPV",
+    [
+      "Petrol",
+      "CNG"
+    ],
+    1,
+    7,
+    "20 km/l",
+    [
+      "Touchscreen",
+      "Rear camera"
+    ]
+  ],
+  [
+    "Maruti Grand Vitara",
+    10.8,
+    "SUV",
+    [
+      "Petrol",
+      "CNG",
+      "Hybrid"
+    ],
+    1,
+    5,
+    "21 km/l",
+    [
+      "Sunroof",
+      "360° camera"
+    ]
+  ]
+]
