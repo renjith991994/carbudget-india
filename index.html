@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CarBudget India – find cars that fit your budget</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#0B0E11;--surf:#12171C;--raise:#181E25;--line:rgba(255,255,255,.11);--ink:#F2EEE6;--mute:#98A2AC;--gold:#C8A96B;--gold2:#E4CB93;--on-gold:#14110B;--ok:#7FD1AE;--warn:#DDB56C;
+--serif:'Instrument Serif','Iowan Old Style','Palatino Linotype',Georgia,serif;--sans:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F3F4F6;--surf:#fff;--raise:#F7F8F9;--line:rgba(10,14,20,.13);--ink:#12161B;--mute:#5A6570;--gold:#8A6B2B;--gold2:#6F5420;--on-gold:#fff;--ok:#0E6B45;--warn:#8A5A00;color-scheme:light}}
+:root[data-theme="light"]{--bg:#F3F4F6;--surf:#fff;--raise:#F7F8F9;--line:rgba(10,14,20,.13);--ink:#12161B;--mute:#5A6570;--gold:#8A6B2B;--gold2:#6F5420;--on-gold:#fff;--ok:#0E6B45;--warn:#8A5A00;color-scheme:light}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--sans);-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:baseline;padding:22px 0 18px;border-bottom:1px solid var(--line)}
+.logo{font:400 26px/1 var(--serif);letter-spacing:.01em}
+.logo span{color:var(--gold);font-style:italic;margin-left:6px}
+.tag{font-size:13px;color:var(--mute)}
+.hero{padding:40px 0 26px}
+h1{font:400 clamp(38px,9vw,68px)/1.02 var(--serif);letter-spacing:-.01em;margin:0 0 12px;max-width:14ch}
+.lede{color:var(--mute);max-width:44ch;margin:0 0 28px}
+.panel{background:linear-gradient(180deg,var(--raise),var(--surf));border:1px solid var(--line);border-radius:22px;padding:26px 22px 22px;position:relative}
+.panel:before{content:"";position:absolute;left:22px;right:22px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.lbl{font-size:14px;color:var(--mute)}
+.big{font:400 clamp(72px,22vw,128px)/.95 var(--serif);letter-spacing:-.03em;margin:6px 0 4px;font-variant-numeric:lining-nums tabular-nums}
+.big small{font:italic 400 .32em/1 var(--serif);color:var(--gold);letter-spacing:0;margin-left:8px}
+.hint{font-size:14px;color:var(--mute);min-height:21px}
+input[type=range]{--p:30%;width:100%;height:44px;margin:14px 0 0;background:transparent;-webkit-appearance:none;appearance:none;touch-action:pan-y;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg,var(--gold) var(--p),var(--line) var(--p))}
+input[type=range]::-moz-range-track{height:2px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:2px;background:var(--gold)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-12px;border-radius:50%;background:var(--bg);border:2px solid var(--gold);box-shadow:0 0 0 6px color-mix(in srgb,var(--gold) 16%,transparent)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--bg);border:2px solid var(--gold)}
+.scale{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute)}
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.chip,.quick button{border:1px solid var(--line);background:transparent;border-radius:99px;padding:8px 16px;min-height:42px;cursor:pointer;white-space:nowrap;font-size:14.5px}
+.chip[aria-pressed=true],.quick button[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:var(--on-gold);font-weight:600}
+.onroad{display:flex;gap:12px;align-items:flex-start;margin-top:20px;padding-top:18px;border-top:1px solid var(--line);font-size:14.5px;color:var(--mute);cursor:pointer}
+.onroad input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--gold);flex:none}
+.filters{padding:26px 0 4px}
+.f{margin:0 0 16px}.f h2{font:600 14px/1 var(--sans);color:var(--mute);margin:0 0 10px}
+.row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.row::-webkit-scrollbar{display:none}
+details summary{cursor:pointer;color:var(--gold);font-weight:600;font-size:14.5px;padding:8px 0;min-height:40px}
+.bar{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:28px 0 16px;padding-top:22px;border-top:1px solid var(--line)}
+.bar h2{margin:0;font:400 clamp(28px,6vw,38px)/1.05 var(--serif)}
+select{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:9px 10px;min-height:42px;font-size:14px}
+.grid{display:grid;gap:14px;grid-template-columns:1fr;padding:0;margin:0;list-style:none}
+@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}.wrap{padding:0 32px}.hero{padding:60px 0 34px}.panel{padding:34px 34px 28px}}
+@media(min-width:1080px){.grid{grid-template-columns:repeat(3,1fr)}}
+.car{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.art{background:var(--raise);border:1px solid var(--line);border-radius:14px;padding:12px 10px 4px}
+.art svg{display:block;width:100%;height:auto;max-height:150px}
+.hd{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.car h3{margin:0;font:400 27px/1.05 var(--serif);letter-spacing:-.005em}
+.meta{color:var(--mute);font-size:13.5px;margin-top:5px}
+.pr{text-align:right;white-space:nowrap}.pr b{display:block;font:400 28px/1 var(--serif);font-variant-numeric:lining-nums tabular-nums}
+.pr span{font-size:12px;color:var(--mute)}
+.sp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}
+.sp dt{font-size:12.5px;color:var(--mute)}.sp dd{margin:2px 0 0;font-weight:600;font-size:15px}
+.tg{display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0;list-style:none}
+.tg li{border:1px solid var(--line);border-radius:99px;padding:3px 11px;font-size:13px}
+.left{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);font-size:14px;font-weight:600;color:var(--ok)}
+.left small{display:block;font-weight:400;color:var(--mute);font-size:12.5px;margin-top:2px}
+.near .left{color:var(--warn)}
+.empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:18px;padding:34px 20px;text-align:center;color:var(--mute)}
+.empty b{display:block;font:400 28px/1.1 var(--serif);color:var(--ink);margin-bottom:6px}
+.empty button{margin-top:16px;background:var(--gold);color:var(--on-gold);border:0;border-radius:99px;padding:11px 22px;min-height:44px;cursor:pointer;font-weight:600}
+footer{color:var(--mute);font-size:13px;padding:34px 0 40px;margin-top:30px;border-top:1px solid var(--line);max-width:72ch}
+.car{cursor:pointer}
+.more{align-self:flex-start;background:none;border:0;padding:6px 0;min-height:40px;color:var(--gold);font-weight:600;font-size:14.5px;cursor:pointer}
+dialog{width:min(580px,calc(100% - 24px));max-height:90vh;padding:22px;border:1px solid var(--line);border-radius:22px;background:var(--surf);color:var(--ink);overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.62)}
+dialog h2{margin:0;font:400 34px/1.05 var(--serif)}dialog h3{margin:22px 0 10px;font:600 14px/1 var(--sans);color:var(--mute)}
+.dh{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.x{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;font-size:24px;line-height:1;cursor:pointer}
+.dp{font:400 32px/1 var(--serif);margin:16px 0 4px}.dp small{display:block;font:400 13px/1.4 var(--sans);color:var(--mute);margin-top:6px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 0}
+.facts dt{font-size:12.5px;color:var(--mute)}.facts dd{margin:2px 0 0;font-weight:600;font-size:15px}
+.note{font-size:13px;color:var(--mute);margin:20px 0 16px}
+.btn{display:flex;justify-content:center;align-items:center;min-height:48px;padding:12px 18px;border-radius:99px;background:var(--gold);color:var(--on-gold);font-weight:700;text-decoration:none;text-align:center}
+@media(max-width:600px){dialog{width:100%;max-width:none;margin:auto 0 0;border-radius:22px 22px 0 0;max-height:92vh}}
+@media(prefers-reduced-motion:no-preference){.chip,.quick button{transition:background .2s,color .2s,border-color .2s}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".34"/></linearGradient>
+<linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E4EEF8" stop-opacity=".92"/><stop offset="1" stop-color="#5B7189" stop-opacity=".92"/></linearGradient>
+</defs></svg>
+<div class="wrap">
+<header><div class="logo">CarBudget<span>India</span></div><div class="tag">Compare cars by what you can spend</div></header>
+<section class="hero">
+<h1>Find the car that fits your budget</h1>
+<p class="lede">Set what you want to spend and see every car you can drive home, with the features that matter.</p>
+<div class="panel">
+<div class="lbl">Your budget</div>
+<div class="big" id="big" aria-live="polite">₹10<small>lakh</small></div>
+<div class="hint" id="hint"></div>
+<input id="rng" type="range" min="3" max="25" step="0.5" value="10" aria-label="Budget in lakh rupees">
+<div class="scale"><span>₹3 lakh</span><span>₹25 lakh</span></div>
+<div class="quick" id="quick"></div>
+<label class="onroad"><input type="checkbox" id="onroad"><span>My budget is the on-road price, including registration and insurance</span></label>
+</div>
+</section>
+<div class="filters">
+<div class="f"><h2>Body type</h2><div class="row" id="bodies"></div></div>
+<div class="f"><h2>Fuel</h2><div class="row" id="fuels"></div></div>
+<details><summary>More filters: gearbox, seats, features</summary><div class="f" style="margin-top:8px"><div class="row" id="more" style="flex-wrap:wrap;overflow:visible"></div></div></details>
+</div>
+<div class="bar"><h2 id="count" aria-live="polite"></h2>
+<select id="sort" aria-label="Sort cars"><option value="hi">Most car for the budget</option><option value="lo">Lowest price first</option></select></div>
+<ul class="grid" id="list"></ul>
+<div id="nearWrap" hidden><div class="bar"><h2>Just above your budget</h2></div><ul class="grid" id="near"></ul></div>
+<footer>Sample listings with indicative starting ex-showroom prices in lakh rupees. Final price changes with variant, city and offers, so confirm with your dealer. On-road price is estimated at about 12% above ex-showroom. Car pictures are illustrations, and real colours and design vary by model.</footer>
+</div>
+<dialog id="dlg" aria-label="Car details"></dialog>
+<script>
+// name, ex-showroom ₹ lakh (indicative), body, fuels, automatic available, seats, mileage/range, features
+const CARS=[
+['Maruti Alto K10',3.7,'Hatchback',['Petrol','CNG'],1,5,'24 km/l',['Touchscreen']],
+['Tata Tiago',5.0,'Hatchback',['Petrol','CNG'],1,5,'20 km/l',['Touchscreen','Rear camera']],
+['Tata Punch',5.6,'SUV',['Petrol','CNG'],1,5,'20 km/l',['Sunroof','Touchscreen']],
+['Hyundai Grand i10 Nios',5.9,'Hatchback',['Petrol','CNG'],1,5,'20 km/l',['Touchscreen','Rear camera']],
+['Maruti Dzire',6.3,'Sedan',['Petrol','CNG'],1,5,'25 km/l',['Sunroof','Rear camera']],
+['Maruti Swift',6.5,'Hatchback',['Petrol','CNG'],1,5,'25 km/l',['Touchscreen','Rear camera']],
+['Maruti Baleno',6.6,'Hatchback',['Petrol','CNG'],1,5,'22 km/l',['360° camera','Touchscreen']],
+['Hyundai i20',7.0,'Hatchback',['Petrol'],1,5,'20 km/l',['Sunroof','Wireless charging']],
+['Honda Amaze',7.2,'Sedan',['Petrol'],1,5,'19 km/l',['ADAS','Touchscreen']],
+['Tata Nexon',7.3,'SUV',['Petrol','Diesel','CNG'],1,5,'17 km/l',['Sunroof','360° camera','Ventilated seats']],
+['Hyundai Venue',7.3,'SUV',['Petrol','Diesel'],1,5,'18 km/l',['Sunroof','ADAS']],
+['Kia Sonet',7.3,'SUV',['Petrol','Diesel'],1,5,'18 km/l',['Sunroof','ADAS','Ventilated seats']],
+['Mahindra XUV 3XO',7.5,'SUV',['Petrol','Diesel'],1,5,'18 km/l',['Sunroof','ADAS']],
+['Tata Tiago EV',7.9,'Hatchback',['Electric'],1,5,'315 km range',['Touchscreen','Rear camera']],
+['Maruti Brezza',8.3,'SUV',['Petrol','CNG'],1,5,'20 km/l',['Sunroof','360° camera']],
+['Maruti Ertiga',9.0,'MPV',['Petrol','CNG'],1,7,'20 km/l',['Touchscreen','Rear camera']],
+['Tata Punch EV',9.9,'SUV',['Electric'],1,5,'365 km range',['Sunroof','360° camera']],
+['Maruti Grand Vitara',10.8,'SUV',['Petrol','CNG','Hybrid'],1,5,'21 km/l',['Sunroof','360° camera']],
+['Hyundai Creta',11.0,'SUV',['Petrol','Diesel'],1,5,'17 km/l',['Sunroof','ADAS','Ventilated seats']],
+['Honda City',11.9,'Sedan',['Petrol','Hybrid'],1,5,'18 km/l',['Sunroof','ADAS']],
+['Tata Nexon EV',12.5,'SUV',['Electric'],1,5,'400 km range',['Sunroof','360° camera','Ventilated seats']],
+['Mahindra Scorpio-N',13.5,'SUV',['Petrol','Diesel'],1,7,'15 km/l',['Sunroof','4x4 option']],
+['Tata Harrier',14.0,'SUV',['Diesel'],1,5,'16 km/l',['Sunroof','ADAS','360° camera']],
+['Mahindra XUV700',14.0,'SUV',['Petrol','Diesel'],1,7,'15 km/l',['Sunroof','ADAS','360° camera']],
+['Toyota Innova Hycross',19.5,'MPV',['Hybrid'],1,7,'21 km/l',['Sunroof','ADAS','Ventilated seats']]
+];
+const BODIES=['Hatchback','Sedan','SUV','MPV'],FUELS=['Petrol','Diesel','CNG','Electric','Hybrid'],FEATS=['Sunroof','ADAS','360° camera','Ventilated seats'];
+const ONROAD=1.12;
+const S={budget:10,onroad:false,body:new Set(),fuel:new Set(),feat:new Set(),auto:false,seven:false,sort:'hi'};
+const $=id=>document.getElementById(id);
+const fmt=n=>'₹'+(Math.round(n*10)/10).toString().replace(/\.0$/,'')+' lakh';
+const PAL=['#B9BCC1','#C2403A','#2F5FA8','#E9E7E2','#3B414A','#2F7D5C','#D68B2E'];
+const BODYP={
+Hatchback:{b:'M14 72C14 62 18 58 30 56L62 50C70 38 82 28 100 26H148C162 28 172 38 182 50L214 56C224 58 228 64 228 72V80H14Z',g:'M72 50C78 40 88 33 102 32H146C156 33 164 40 172 50Z',d:'M122 33V74'},
+Sedan:{b:'M12 72C12 63 16 59 30 57L66 52C76 40 90 33 108 32H138C152 33 160 42 170 50L205 55C222 58 230 62 230 72V80H12Z',g:'M78 51C86 41 96 36 108 36H136C146 37 152 43 158 51Z',d:'M122 37V74'},
+SUV:{b:'M12 72C12 60 16 56 30 54L60 50C66 34 78 24 96 22H158C172 24 182 36 190 50L212 54C226 57 230 62 230 72V82H12Z',g:'M72 49C76 38 84 30 98 28H156C166 30 174 38 180 49Z',d:'M124 29V74'},
+MPV:{b:'M12 72C12 58 16 54 30 52L56 46C62 32 72 24 90 22H170C186 24 196 34 204 48L216 52C228 56 230 62 230 72V82H12Z',g:'M66 46C70 36 78 30 92 28H168C180 30 188 38 192 46Z',d:'M118 29V74M150 29V74'}};
+const wheel=x=>`<circle cx="${x}" cy="76" r="19" fill="var(--raise)"/><circle cx="${x}" cy="76" r="15" fill="#14171B"/><circle cx="${x}" cy="76" r="8.5" fill="#A3A9B1"/><circle cx="${x}" cy="76" r="3" fill="#14171B"/>`;
+const icon=(b,name)=>{let h=0;for(const ch of name)h=(h*31+ch.charCodeAt(0))>>>0;const col=PAL[h%PAL.length],p=BODYP[b];
+return `<svg viewBox="0 0 240 100" role="img" aria-label="${b} illustration"><ellipse cx="120" cy="92" rx="108" ry="5" fill="#000" opacity=".3"/><path d="${p.b}" fill="${col}"/><path d="${p.b}" fill="url(#sheen)"/><path d="${p.g}" fill="url(#glass)"/><path d="${p.d}" stroke="#000" stroke-opacity=".28" stroke-width="1.2" fill="none"/><path d="M216 60H228L226 67H215Z" fill="#FFF3C9"/><path d="M14 60H23V67H14Z" fill="#E0352B"/>${wheel(62)}${wheel(178)}</svg>`};
+const SITE={Maruti:['Maruti Suzuki','https://www.marutisuzuki.com'],Tata:['Tata Motors','https://cars.tatamotors.com'],Hyundai:['Hyundai','https://www.hyundai.com/in'],Honda:['Honda Cars India','https://www.hondacarindia.com'],Kia:['Kia India','https://www.kia.com/in'],Mahindra:['Mahindra','https://auto.mahindra.com'],Toyota:['Toyota','https://www.toyotabharat.com']};
+const EXTRA={'Tata Nexon':{'Engines':'1.2 L petrol, 1.5 L diesel, 1.2 L CNG','Ground clearance':'208 mm','Boot space':'382 L','Fuel tank':'44 L'}};
+function openCar(i){
+  const c=CARS[i],br=SITE[c[0].split(' ')[0]],ex=EXTRA[c[0]],ev=c[3].length==1&&c[3][0]=='Electric',d=$('dlg');
+  d.innerHTML=`<div class="dh"><div><h2>${c[0]}</h2><div class="meta">${c[2]} · ${c[5]} seats</div></div><button type="button" class="x" aria-label="Close">×</button></div>
+<div class="art">${icon(c[2],c[0])}</div>
+<div class="dp">${fmt(c[1])}<small>Ex-showroom, from. On-road about ${fmt(c[1]*ONROAD)}.</small></div>
+<dl class="facts"><div><dt>Body type</dt><dd>${c[2]}</dd></div><div><dt>Seats</dt><dd>${c[5]}</dd></div><div><dt>Fuel</dt><dd>${c[3].join(', ')}</dd></div><div><dt>Gearbox</dt><dd>${c[4]?'Manual and automatic':'Manual'}</dd></div><div><dt>${ev?'Claimed range':'Mileage'}</dt><dd>${c[6]}</dd></div></dl>
+<h3>Features</h3><ul class="tg">${c[7].map(t=>`<li>${t}</li>`).join('')}${c[4]?'<li>Automatic</li>':''}</ul>
+${ex?`<h3>Specifications</h3><dl class="facts">${Object.entries(ex).map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>`:''}
+<p class="note">Features change by variant, and the lists here are a summary. Check the full, current list on the maker’s website before you buy.</p>
+${br?`<a class="btn" href="${br[1]}" target="_blank" rel="noopener noreferrer">See all features on ${br[0]}’s website</a>`:''}`;
+  d.querySelector('.x').onclick=()=>d.close();d.showModal();
+}
+$('dlg').addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.close()});
+['list','near'].forEach(id=>$(id).addEventListener('click',e=>{const li=e.target.closest('.car');if(li)openCar(+li.dataset.i)}));
+function chip(parent,label,fn){const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=label;b.setAttribute('aria-pressed','false');b.onclick=()=>fn(b);parent.appendChild(b);return b}
+function toggle(set,v,b){set.has(v)?set.delete(v):set.add(v);b.setAttribute('aria-pressed',set.has(v));render()}
+BODIES.forEach(v=>chip($('bodies'),v,b=>toggle(S.body,v,b)));
+FUELS.forEach(v=>chip($('fuels'),v,b=>toggle(S.fuel,v,b)));
+chip($('more'),'Automatic available',b=>{S.auto=!S.auto;b.setAttribute('aria-pressed',S.auto);render()});
+chip($('more'),'7 seats',b=>{S.seven=!S.seven;b.setAttribute('aria-pressed',S.seven);render()});
+FEATS.forEach(v=>chip($('more'),v,b=>toggle(S.feat,v,b)));
+[5,8,10,15,20].forEach(v=>{const b=document.createElement('button');b.type='button';b.textContent='₹'+v+' lakh';b.dataset.v=v;b.onclick=()=>{S.budget=v;$('rng').value=v;render()};$('quick').appendChild(b)});
+$('rng').oninput=e=>{S.budget=+e.target.value;render()};
+$('onroad').onchange=e=>{S.onroad=e.target.checked;render()};
+$('sort').onchange=e=>{S.sort=e.target.value;render()};
+function matches(c){
+  if(S.body.size&&!S.body.has(c[2]))return false;
+  if(S.fuel.size&&!c[3].some(f=>S.fuel.has(f)))return false;
+  if(S.auto&&!c[4])return false;
+  if(S.seven&&c[5]<7)return false;
+  for(const f of S.feat)if(!c[7].includes(f))return false;
+  return true}
+function card(c,limit,near){
+  const left=limit-c[1],ev=c[3].length==1&&c[3][0]=='Electric';
+  return `<li class="car${near?' near':''}" data-i="${CARS.indexOf(c)}"><div class="art">${icon(c[2],c[0])}</div>
+<div class="hd"><div><h3>${c[0]}</h3><div class="meta">${c[2]} · ${c[5]} seats</div></div>
+<div class="pr"><b>${fmt(c[1])}</b><span>ex-showroom, from</span></div></div>
+<dl class="sp"><div><dt>${ev?'Claimed range':'Mileage'}</dt><dd>${c[6]}</dd></div><div><dt>Fuel</dt><dd>${c[3].join(', ')}</dd></div></dl>
+<ul class="tg">${c[7].map(t=>`<li>${t}</li>`).join('')}${c[4]?'<li>Automatic</li>':''}</ul>
+<div class="left">${near?`About ${fmt(-left)} over your budget`:`${fmt(left)} under your budget`}<small>On-road about ${fmt(c[1]*ONROAD)}</small></div><button type="button" class="more">See all features</button></li>`}
+function render(){
+  const b=S.budget,lim=S.onroad?b/ONROAD:b;
+  $('big').innerHTML='₹'+(b%1?b.toFixed(1):b)+'<small>lakh</small>';
+  $('rng').style.setProperty('--p',((b-3)/22*100)+'%');
+  $('hint').textContent=S.onroad?`Showing cars up to ${fmt(lim)} ex-showroom`:'Ex-showroom price, before registration and insurance';
+  document.querySelectorAll('#quick button').forEach(x=>x.setAttribute('aria-pressed',+x.dataset.v===b));
+  const pool=CARS.filter(matches);
+  const fit=pool.filter(c=>c[1]<=lim),near=pool.filter(c=>c[1]>lim&&c[1]<=lim*1.1);
+  fit.sort(S.sort==='hi'?(a,z)=>z[1]-a[1]:(a,z)=>a[1]-z[1]);near.sort((a,z)=>a[1]-z[1]);
+  $('count').textContent=fit.length?`${fit.length} car${fit.length>1?'s':''} fit ${fmt(b)}`:`No cars fit ${fmt(b)}`;
+  $('list').innerHTML=fit.length?fit.map(c=>card(c,lim,0)).join(''):`<li class="empty"><b>Nothing matches yet</b>Raise your budget or loosen a filter to see more cars.<br><button type="button" id="clr">Clear filters</button></li>`;
+  const clr=$('clr');if(clr)clr.onclick=()=>{S.body.clear();S.fuel.clear();S.feat.clear();S.auto=S.seven=false;document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));render()};
+  $('near').innerHTML=near.map(c=>card(c,lim,1)).join('');$('nearWrap').hidden=!near.length;
+}
+render();
+</script>
+</body>
+</html>
